@@ -1,35 +1,87 @@
-import process from 'node:process';
+import { cwd } from 'node:process';
 import { homedir } from 'node:os'
-import { read } from './basic-operations/read.js';
-import {up} from './nav/navigation.js';
-// import {create} from './basic-operations/create.js';
-// import {rn} from "./basic-operations/rename.js";
-// import { copy } from './basic-operations/copy.js';
-// import {remove} from './basic-operations/delete.js';
+import { read, move, create, rn, copy, remove } from './basic-operations/index.js';
+import { os } from "./os/os.js";
+import { calculateHash } from "./hash/hash.js";
+import { getCurrentDirectory, up, cd } from './nav/index.js';
+import { getUserName, ls } from "./utils/index.js";
 
-const greetUser = () => {
-    const args = process.argv.slice(2);
-    const userName = args.find((item) => item.startsWith('--username=')).split('=').pop();
-
+const startApp = () => {
+    const userName = getUserName();
     console.log(`Welcome to the File Manager, ${userName}!`);
+    process.chdir(homedir());
 
 
+    process.stdin.on('data', async (data) => {
+        const input = data.toString().trim();
+        const [command, ...args] = input.split(' ');
+        const argument = args[0];
+        // const secondValue = input[2];
 
-    const userHomeDir = homedir();
-    console.log('userHomeDir', userHomeDir);
-    up();
-    read('/src/nav/navigation.js');
+        switch (command) {
+            case '.exit':
+                process.exit();
+                break;
 
-    // const content = 'I am fresh and young';
-    // create('src/nav/fresh.txt', content);
-    // rn('src/nav/fresh.txt', 'src/nav/abc.txt');
-    // copy('/src/nav/navigation.js', '/src/nav/navigation.js');
-    // remove('/src/nav/navigation.js');
+            case 'ls':
+                ls(cwd());
+                break;
 
+            case 'up':
+                try {
+                    up();
+                } catch (error) {
+                    console.error('fail');
+                }
+                break;
 
+            case 'cd':
+                cd(argument);
+                break;
+
+            case 'os':
+                os(argument);
+                break;
+
+            case 'hash':
+                calculateHash(argument);
+                break;
+
+            case 'rn':
+                rn(argument);
+                break;
+
+            case 'rm':
+                remove(argument);
+                break;
+
+            case 'add':
+                create(argument);
+                break;
+
+            case 'cat':
+                read(argument);
+                break;
+
+            case 'cp':
+                copy(argument);
+                break;
+
+            case 'mv':
+               move(argument);
+                break;
+
+            default:
+                process.stdout.write('Invalid input');
+                break;
+        }
+        getCurrentDirectory();
+        process.stdout.write(`Type command: `);
+    });
+    process.on('SIGINT', () => process.exit(0));
     process.on("exit", () => {
         console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
     });
 };
 
-await greetUser();
+await startApp();

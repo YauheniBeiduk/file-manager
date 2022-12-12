@@ -1,5 +1,5 @@
 import { createReadStream } from 'node:fs';
-import {getCurrentDirectory} from "../nav/getCurrentDirectory.mjs";
+import { getCurrentDirectory } from "../nav/index.js";
 
 export const read = async (filePath) => {
     const a = getCurrentDirectory();

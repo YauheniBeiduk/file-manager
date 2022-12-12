@@ -1,5 +1,5 @@
 import { unlink } from 'node:fs/promises';
-import {getCurrentDirectory} from "../nav/getCurrentDirectory.mjs";
+import { getCurrentDirectory } from "../nav/index.js";
 
 export const remove = (pathToRemoveFile) => {
     const a = getCurrentDirectory();

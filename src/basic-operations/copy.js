@@ -1,5 +1,5 @@
-import { createWriteStream, createReadStream } from 'node:fs';
-import {getCurrentDirectory} from "../nav/getCurrentDirectory.mjs";
+import { createWriteStream, createReadStream } from 'fs';
+import { getCurrentDirectory } from "../nav/index.js";
 
 export const copy = (filePath, copyFileName = filePath) => {
     try {
