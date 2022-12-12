@@ -1,4 +1,4 @@
-import { isAbsolute, join } from 'node:path';
-import { cwd } from 'node:process';
+import { isAbsolute, resolve } from 'path';
+import { cwd } from 'process';
 
-export const getAbsolutePath = (path) => (isAbsolute(path) ? path : join(cwd(), path));
+export const getAbsolutePath = (path) => (isAbsolute(path) ? path : resolve(cwd(), path));

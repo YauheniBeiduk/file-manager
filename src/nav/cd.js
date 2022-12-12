@@ -1,8 +1,9 @@
-import process from 'node:process';
-
-import { getCurrentDirectory } from "./getCurrentDirectory.js";
+import { chdir } from 'process';
 
 export const cd = (path) => {
-    process.chdir(path);
-    getCurrentDirectory();
+    try {
+        chdir(path);
+    } catch (err) {
+        console.error("Operation failed", err);
+    }
 }

@@ -1,10 +1,9 @@
-import {getCurrentDirectory} from "./getCurrentDirectory.js";
+import { getCurrentDirectory } from "./getCurrentDirectory.js";
 import {getAbsolutePath} from "../utils/getAbsolutePath.js";
-import { chdir } from 'node:process';
+import { chdir } from 'process';
 
 export const up = () => {
     const path = getAbsolutePath('../');
     chdir(path);
     getCurrentDirectory();
-
 }

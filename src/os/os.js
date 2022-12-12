@@ -1,26 +1,24 @@
-import { EOL, cpus, userInfo, arch } from 'node:os'
+import { EOL, cpus, userInfo, arch } from 'os';
 
 export const os = (command) => {
-    if (!command) {
-        console.log('Invalid input');
-    }
     const { homedir, username } = userInfo();
 
     if (command === '--EOL') {
         console.log('EOL', JSON.stringify(EOL));
     }
-    if (command === '--cpus') {
-        const cpusInfo = cpus().map(({model, speed}) => ({model, speed}))
-
+    else if (command === '--cpus') {
+        const cpusInfo = cpus().map(({model, speed}) => ({model, speed}));
         console.log(cpusInfo);
     }
-    if (command === '--homedir') {
+    else if (command === '--homedir') {
         console.log(homedir);
     }
-    if (command === '--username') {
+    else if (command === '--username') {
         console.log(username);
     }
-    if (command === '--architecture') {
+    else if (command === '--architecture') {
         console.log(arch());
+    } else {
+        console.error("Operation failed");
     }
 }

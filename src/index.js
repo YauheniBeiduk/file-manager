@@ -9,30 +9,33 @@ import { getUserName, ls } from "./utils/index.js";
 const startApp = () => {
     const userName = getUserName();
     console.log(`Welcome to the File Manager, ${userName}!`);
-    process.chdir(homedir());
-
+    getCurrentDirectory();
 
     process.stdin.on('data', async (data) => {
         const input = data.toString().trim();
         const [command, ...args] = input.split(' ');
         const argument = args[0];
-        // const secondValue = input[2];
+        const secondArg = args[1];
 
         switch (command) {
-            case '.exit':
-                process.exit();
+            case 'add':
+                create(argument);
+                break;
+
+            case 'cat':
+                read(argument);
+                break;
+
+            case 'cp':
+                await copy(argument, secondArg);
                 break;
 
             case 'ls':
-                ls(cwd());
+                await ls();
                 break;
 
             case 'up':
-                try {
-                    up();
-                } catch (error) {
-                    console.error('fail');
-                }
+                up();
                 break;
 
             case 'cd':
@@ -44,41 +47,33 @@ const startApp = () => {
                 break;
 
             case 'hash':
-                calculateHash(argument);
+                await calculateHash(argument);
                 break;
 
             case 'rn':
-                rn(argument);
+                await rn(argument, secondArg);
                 break;
 
             case 'rm':
                 remove(argument);
                 break;
 
-            case 'add':
-                create(argument);
-                break;
-
-            case 'cat':
-                read(argument);
-                break;
-
-            case 'cp':
-                copy(argument);
-                break;
-
             case 'mv':
                move(argument);
                 break;
 
+            case '.exit':
+                process.exit();
+                break;
+
             default:
-                process.stdout.write('Invalid input');
+                console.log('Invalid input');
                 break;
         }
         getCurrentDirectory();
-        process.stdout.write(`Type command: `);
+        console.log(`Type command: `);
     });
-    process.on('SIGINT', () => process.exit(0));
+    process.on('SIGINT', () => process.exit());
     process.on("exit", () => {
         console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
     });

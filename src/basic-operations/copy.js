@@ -1,17 +1,17 @@
 import { createWriteStream, createReadStream } from 'fs';
-import { getCurrentDirectory } from "../nav/index.js";
+import { pipeline } from 'stream/promises';
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
-export const copy = (filePath, copyFileName = filePath) => {
+export const copy = async (filePath, copyFilePath) => {
     try {
-    const a = getCurrentDirectory();
-    const filePathNew = new URL(a+filePath, import.meta.url);
-    const copyFilePath = new URL(a+copyFileName, import.meta.url);
+    const pathToFile = getAbsolutePath(filePath);
+    const cpFilePath = getAbsolutePath(copyFilePath);
 
-    const readable = createReadStream(filePathNew, { encoding: 'utf8' });
-    const writable = createWriteStream(copyFilePath);
+    const readable = createReadStream(pathToFile, { encoding: 'utf8' });
+    const writable = createWriteStream(cpFilePath);
 
-    readable.pipe(writable);
-    } catch {
-        throw Error("Operation failed");
+    await pipeline(readable, writable);
+    } catch (err) {
+        console.error("Operation failed", err);
     }
 }

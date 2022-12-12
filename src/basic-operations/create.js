@@ -1,10 +1,12 @@
-import { writeFile } from 'node:fs/promises';
+import { writeFile } from 'fs/promises';
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 export const create = (path, content = '') => {
    try {
-       writeFile(path, content, { flag: 'wx' });
+       const pathToFile = getAbsolutePath(path);
+       writeFile(pathToFile, content, { flag: 'wx' });
    }
-   catch {
-       throw Error("Operation failed");
-        }
+   catch (err) {
+       console.error("Operation failed", err);
+   }
 };
