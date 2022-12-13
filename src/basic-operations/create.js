@@ -1,5 +1,5 @@
 import { open } from 'fs/promises';
-import { getAbsolutePath } from "../utils/getAbsolutePath.js";
+import { getAbsolutePath } from '../utils/index.js';
 
 export const create = async (path) => {
    try {

@@ -62,7 +62,7 @@ const startApp = () => {
                 break;
 
             case 'mv':
-               move(argument);
+               await move(argument, secondArg);
                 break;
 
             case 'compress':

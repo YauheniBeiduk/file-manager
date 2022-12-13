@@ -1,5 +1,5 @@
 import { createReadStream } from 'fs';
-import { getAbsolutePath } from "../utils/getAbsolutePath.js";
+import { getAbsolutePath } from '../utils/index.js';
 
 export const cat = (path) => {
     try {

@@ -1,6 +1,6 @@
 import { createWriteStream, createReadStream } from 'fs';
 import { pipeline } from 'stream/promises';
-import { getAbsolutePath } from "../utils/getAbsolutePath.js";
+import { getAbsolutePath } from '../utils/index.js';
 
 export const copy = async (filePath, copyFilePath) => {
     try {

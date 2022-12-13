@@ -7,7 +7,7 @@ export const os = (command) => {
         console.log('EOL', JSON.stringify(EOL));
     }
     else if (command === '--cpus') {
-        const cpusInfo = cpus().map(({model, speed}) => ({model, speed}));
+        const cpusInfo = cpus().map(({model, speed}) => ({model, speed: `${speed / 1000} Ghz`}));
         console.log(cpusInfo);
     }
     else if (command === '--homedir') {
