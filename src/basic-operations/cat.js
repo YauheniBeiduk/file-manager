@@ -1,7 +1,7 @@
-import { createReadStream } from 'node:fs';
+import { createReadStream } from 'fs';
 import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
-export const read = (path) => {
+export const cat = (path) => {
     try {
         const pathToFile = getAbsolutePath(path);
         const ReadStream = createReadStream(pathToFile, {encoding: 'utf8'});

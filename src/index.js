@@ -1,14 +1,17 @@
-import { cwd } from 'node:process';
-import { homedir } from 'node:os'
-import { read, move, create, rn, copy, remove } from './basic-operations/index.js';
+import { homedir } from 'os'
+import { chdir } from "process";
+
+import { cat, move, create, rn, copy, remove } from './basic-operations/index.js';
 import { os } from "./os/os.js";
 import { calculateHash } from "./hash/hash.js";
 import { getCurrentDirectory, up, cd } from './nav/index.js';
 import { getUserName, ls } from "./utils/index.js";
+import { compress, decompress } from "./compress/index.js";
 
 const startApp = () => {
     const userName = getUserName();
     console.log(`Welcome to the File Manager, ${userName}!`);
+    chdir(homedir());
     getCurrentDirectory();
 
     process.stdin.on('data', async (data) => {
@@ -19,11 +22,11 @@ const startApp = () => {
 
         switch (command) {
             case 'add':
-                create(argument);
+                await create(argument);
                 break;
 
             case 'cat':
-                read(argument);
+                cat(argument);
                 break;
 
             case 'cp':
@@ -62,6 +65,14 @@ const startApp = () => {
                move(argument);
                 break;
 
+            case 'compress':
+                await compress(argument, secondArg);
+                break;
+
+            case 'decompress':
+                await decompress(argument, secondArg);
+                break;
+
             case '.exit':
                 process.exit();
                 break;
@@ -71,7 +82,7 @@ const startApp = () => {
                 break;
         }
         getCurrentDirectory();
-        console.log(`Type command: `);
+        console.log(`Type command and wait results: `);
     });
     process.on('SIGINT', () => process.exit());
     process.on("exit", () => {

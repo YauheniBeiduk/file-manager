@@ -1,5 +1,5 @@
-import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto'
+import { readFile } from 'fs/promises';
+import { createHash } from 'crypto'
 import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
 export const calculateHash = async (path) => {

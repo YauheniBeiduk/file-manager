@@ -1,16 +1,19 @@
-import { copy } from "./copy.js";
-import { remove } from "./delete.js";
-import {getAbsolutePath} from "../utils/getAbsolutePath.js";
+import { createReadStream, createWriteStream } from "fs";
+import { unlink } from "fs/promises";
 
- export const move = (file, pathToMove) => {
+import { getAbsolutePath } from "../utils/getAbsolutePath.js";
+import {pipeline} from "stream/promises";
+
+ export const move = async (file, pathToMove) => {
     try {
         const pathToFile = getAbsolutePath(file);
         const moveFilePath = getAbsolutePath(pathToMove);
-        copy(pathToFile, moveFilePath);
-        remove(file);
-    }
-    catch {
-        throw Error("Operation failed");
+        const readable = createReadStream(pathToFile, { encoding: 'utf8' });
+        const writable = createWriteStream(moveFilePath);
+        await pipeline(readable, writable);
 
+        await unlink(pathToFile);
+    } catch (err) {
+        console.error("Operation failed", err);
     }
 }

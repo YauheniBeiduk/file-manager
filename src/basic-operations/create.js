@@ -1,10 +1,10 @@
-import { writeFile } from 'fs/promises';
+import { open } from 'fs/promises';
 import { getAbsolutePath } from "../utils/getAbsolutePath.js";
 
-export const create = (path, content = '') => {
+export const create = async (path) => {
    try {
        const pathToFile = getAbsolutePath(path);
-       writeFile(pathToFile, content, { flag: 'wx' });
+       await open(pathToFile, 'wx');
    }
    catch (err) {
        console.error("Operation failed", err);

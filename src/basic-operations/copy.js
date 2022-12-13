@@ -6,7 +6,6 @@ export const copy = async (filePath, copyFilePath) => {
     try {
     const pathToFile = getAbsolutePath(filePath);
     const cpFilePath = getAbsolutePath(copyFilePath);
-
     const readable = createReadStream(pathToFile, { encoding: 'utf8' });
     const writable = createWriteStream(cpFilePath);
 
