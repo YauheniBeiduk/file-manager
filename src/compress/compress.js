@@ -6,8 +6,8 @@ import { resolve, parse } from "path";
 export const compress = async (pathToFile, pathToDestination) => {
     try {
         const path = resolve(pathToFile);
-        const { base } = parse(path);
-        const fileName = `${base}.br`;
+        const { name } = parse(path);
+        const fileName = `${name}.br`;
         const pathToWrite = resolve(pathToDestination, fileName);
 
         const readStream = createReadStream(path);
