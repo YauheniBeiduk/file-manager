@@ -11,10 +11,10 @@ export const os = (command) => {
         console.log(cpusInfo);
     }
     else if (command === '--homedir') {
-        console.log(homedir);
+        console.log(`Homedir is ${homedir}`);
     }
     else if (command === '--username') {
-        console.log(username);
+        console.log(`Username is ${username}`);
     }
     else if (command === '--architecture') {
         console.log(arch());
